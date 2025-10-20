@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433580166608",
+    "project_id": "fir-crud-70c58",
+    "storage_bucket": "fir-crud-70c58.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433580166608:android:7d36fd706d45a9f8ba3dd5",
+        "android_client_info": {
+          "package_name": "com.careshiftapp.careshiftapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB1krvPKxmq1LF9-vIa1gD69s9mmbiy3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433580166608:android:fe1faa03693a3708ba3dd5",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_crud"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB1krvPKxmq1LF9-vIa1gD69s9mmbiy3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

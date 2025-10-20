@@ -1,0 +1,178 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import '../../../../controller/controllers.dart';
+import '../../../../routes/app_routes.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
+
+class ChangePasswordScreen extends StatelessWidget {
+   ChangePasswordScreen({super.key});
+TextEditingController oldPassCNRL = TextEditingController();
+TextEditingController newPass2 = TextEditingController();
+TextEditingController conPass3 = TextEditingController();
+  ProfileSetupController profileSetupController = Get.find<ProfileSetupController>();
+   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.primaryColor,
+      appBar: AppBar(
+        title: CustomText(
+          text: "Change Password",
+          fontsize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.whiteColor,
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: AppColors.whiteColor),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 20.w),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 40.h,),
+              CustomText(text: "Please enter your old and new passwords to continue",maxline: 2,fontsize: 14.sp,fontWeight: FontWeight.w500,color: AppColors.whiteColor,),
+              SizedBox(height: 20.h,),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topLeft:Radius.circular(24.r),topRight: Radius.circular(24.r),bottomLeft: Radius.circular(24.r),bottomRight: Radius.circular(24.r)   ),
+                    color: AppColors.whiteColor
+                ),
+                child: Padding(
+                  padding:  EdgeInsets.all(16.r),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                
+                        ///============Current password=====>
+                        CustomText(text: "Your Current Password",textAlign: TextAlign.start,fontWeight: FontWeight.w600,),
+                        SizedBox(height: 10.h,),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          child: CustomTextField(
+                            controller: oldPassCNRL,
+                            isPassword: true,
+                            hintText: "Enter your password",
+                
+                            // prefixIcon: Padding(
+                            //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                            //   child: SvgPicture.asset(AppIcons.passIcon, color: AppColors.primaryColor, height: 24.h, width: 24.w),
+                            // ),
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return 'Please enter your Password';
+                              }else if(value.length < 8 || !AppConstants.validatePassword(value)){
+                                return "Password: 8 characters min, letters & digits \nrequired";
+                              }
+                              return null;
+                
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20.h,),
+                
+                        ///============New password=====>
+                
+                        CustomText(text: "Your New Password",textAlign: TextAlign.start,fontWeight: FontWeight.w600,),
+                        SizedBox(height: 10.h,),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          child: CustomTextField(
+                            controller: newPass2,
+                            isPassword: true,
+                            hintText: "Enter a new password",
+                            //
+                            // prefixIcon: Padding(
+                            //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                            //   child: SvgPicture.asset(AppIcons.passIcon, color: AppColors.primaryColor, height: 24.h, width: 24.w),
+                            // ),
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return 'Please enter your Password';
+                              }else if(value.length < 8 || !AppConstants.validatePassword(value)){
+                                return "Password: 8 characters min, letters & digits \nrequired";
+                              }
+                              return null;
+                
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20.h,),
+                
+                        ///============Re password=====>
+                        CustomText(text: "Re-Enter New Password",textAlign: TextAlign.start,fontWeight: FontWeight.w600,),
+                        SizedBox(height: 10.h,),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          child: CustomTextField(
+                            controller: conPass3,
+                            isPassword: true,
+                            hintText: "ReEnter password",
+                
+                            // prefixIcon: Padding(
+                            //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                            //   child: SvgPicture.asset(AppIcons.passIcon, color: AppColors.primaryColor, height: 24.h, width: 24.w),
+                            // ),
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return 'Please enter your Password';
+                              } else if (value != newPass2.text) {
+                                return 'Passwords do not match';
+                              }
+                              return null;
+                
+                            },
+                          ),
+                        ),
+                
+                        GestureDetector(
+                            onTap: (){
+                             Get.toNamed(AppRoutes.forgotPassScreen);
+                            },
+                            child: Padding(
+                              padding:  EdgeInsets.only(left: 190.w),
+                              child: Text(" Forgot Password",style: TextStyle(decoration: TextDecoration.underline,color: Color(0xff0C4479),
+                                  decorationColor:Color(0xff0C4479),
+                                  fontWeight: FontWeight.w500,fontSize: 14.sp),),
+                            )),
+                        SizedBox(height: 20.h,),
+                
+                         Obx(()=>
+                            Padding(
+                              padding:  EdgeInsets.all(8.r),
+                              child: CustomButtonCommon(
+                                 loading: profileSetupController.forPassLoading.value,
+                                color: AppColors.buttonPrimaryColor,
+                                titlecolor: AppColors.whiteColor,
+                                onpress:(){
+                                    if(formKey.currentState!.validate()){
+                                      profileSetupController.changePass( oldPassCNRL.text, newPass2.text,conPass3.text);
+                                    }
+                                    },
+                                title: 'RESET', ),
+                            ),
+                         )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
